@@ -1,4 +1,4 @@
-package com.github.sunglow.lead;
+package com.github.sunglow.lead.common;
 
 /**
  * 常量类
