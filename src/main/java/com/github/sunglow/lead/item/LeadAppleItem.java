@@ -30,7 +30,7 @@ public class LeadAppleItem extends Item {
 
     public LeadAppleItem() {
         //设置属性-食物-属于哪个创造模式选项卡
-        super(new Properties().food(foodData).tab(ModGroup.CREATIVE_MODE_TAB));
+        super(new Properties().food(foodData).tab(ModGroup.LEAD_MODE_TAB));
     }
 
 }

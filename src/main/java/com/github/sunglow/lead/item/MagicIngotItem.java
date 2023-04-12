@@ -4,12 +4,16 @@ import com.github.sunglow.lead.client.ModGroup;
 import net.minecraft.world.item.Item;
 
 /**
- * 铅锭
+ * 魔法锭
+ *
+ * @Author xueyuntong
+ * @Date 2023/4/12 14:17
  */
-public class LeadIngotItem extends Item {
+public class MagicIngotItem extends Item {
 
-    public LeadIngotItem() {
-        //放入创造物品栏中，自定义的一个物品栏
+    public MagicIngotItem() {
         super(new Properties().tab(ModGroup.LEAD_MODE_TAB));
     }
+
+
 }

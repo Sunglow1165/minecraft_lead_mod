@@ -7,6 +7,7 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -18,20 +19,48 @@ import java.util.function.Supplier;
  */
 public enum ModArmorMaterial implements ArmorMaterial {
 
-    //铅
-    LEAD("leather", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
-        return Ingredient.of(ItemRegistry.leadIngot.get());
-    });
+    /**
+     * 铅
+     */
+    LEAD("lead", 40, new int[]{5, 8, 10, 15}, 20
+            , SoundEvents.ARMOR_EQUIP_LEATHER, 2.0F, 0.0F, () -> Ingredient.of(ItemRegistry.leadIngot.get()));
 
-    private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
+    /**
+     * 盔甲材料名称
+     */
     private final String name;
+    /**
+     * 装甲耐久度的倍数
+     */
     private final int durabilityMultiplier;
+    /**
+     * 每个装备槽位提供的防御值数组
+     */
     private final int[] slotProtections;
+    /**
+     * 可以在装备上附加的附魔等级
+     */
     private final int enchantmentValue;
+    /**
+     * 装备时播放的声音
+     */
     private final SoundEvent sound;
+    /**
+     * 装备提供的抗击打值
+     */
     private final float toughness;
+    /**
+     * 装备提供的减少击退的值
+     */
     private final float knockbackResistance;
+    /**
+     * 修复装备所需的材料
+     */
     private final LazyLoadedValue<Ingredient> repairIngredient;
+    /**
+     * 每个槽位提供的额外生命值
+     */
+    protected static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 
     ModArmorMaterial(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         this.name = name;
@@ -56,15 +85,15 @@ public enum ModArmorMaterial implements ArmorMaterial {
         return this.enchantmentValue;
     }
 
-    public SoundEvent getEquipSound() {
+    public @NotNull SoundEvent getEquipSound() {
         return this.sound;
     }
 
-    public Ingredient getRepairIngredient() {
+    public @NotNull Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return this.name;
     }
 

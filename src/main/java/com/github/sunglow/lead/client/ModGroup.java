@@ -9,5 +9,5 @@ import net.minecraft.world.item.CreativeModeTab;
  * @Date 2023/4/11 10:48
  */
 public class ModGroup {
-   public static final CreativeModeTab CREATIVE_MODE_TAB = new LeadGroup();
+   public static final CreativeModeTab LEAD_MODE_TAB = new LeadGroup();
 }
