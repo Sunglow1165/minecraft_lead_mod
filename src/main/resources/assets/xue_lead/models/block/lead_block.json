@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "xue_lead:block/lead_block"
+  }
+}

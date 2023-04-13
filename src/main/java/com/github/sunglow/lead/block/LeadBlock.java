@@ -1,4 +1,4 @@
-package com.github.sunglow.lead.Block;
+package com.github.sunglow.lead.block;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;

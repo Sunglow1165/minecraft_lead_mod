@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "xue_lead:block/lead_block"
+    }
+  }
+}
