@@ -11,6 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 
 /**
+ * 盔甲穿在身上的渲染纹理
+ *
  * @Author xueyuntong
  * @Date 2023/4/12 11:50
  */
