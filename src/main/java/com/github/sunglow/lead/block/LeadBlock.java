@@ -14,9 +14,9 @@ import net.minecraft.world.level.material.Material;
 public class LeadBlock extends Block {
 
     public LeadBlock() {
-        super(BlockBehaviour.Properties.of(Material.STONE)
-                .strength(1.5F, 6.0F)
-                .sound(SoundType.STONE)
+        super(BlockBehaviour.Properties.of(Material.METAL)
+                .strength(0.2F, 1.5F)
+                .sound(SoundType.METAL)
                 .requiresCorrectToolForDrops());
     }
 }

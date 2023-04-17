@@ -1,4 +1,4 @@
-package com.github.sunglow.lead.client;
+package com.github.sunglow.lead.client.group;
 
 import net.minecraft.world.item.CreativeModeTab;
 

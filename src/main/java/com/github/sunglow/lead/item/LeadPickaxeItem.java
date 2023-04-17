@@ -1,6 +1,6 @@
 package com.github.sunglow.lead.item;
 
-import com.github.sunglow.lead.client.ModGroup;
+import com.github.sunglow.lead.client.group.ModGroup;
 import com.github.sunglow.lead.common.ModItemTier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;

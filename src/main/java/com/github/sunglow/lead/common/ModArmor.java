@@ -1,6 +1,6 @@
 package com.github.sunglow.lead.common;
 
-import com.github.sunglow.lead.client.ModGroup;
+import com.github.sunglow.lead.client.group.ModGroup;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;

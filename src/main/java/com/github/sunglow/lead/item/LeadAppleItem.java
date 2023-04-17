@@ -1,6 +1,6 @@
 package com.github.sunglow.lead.item;
 
-import com.github.sunglow.lead.client.ModGroup;
+import com.github.sunglow.lead.client.group.ModGroup;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;

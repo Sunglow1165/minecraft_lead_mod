@@ -47,7 +47,7 @@ public class BurnedZombie extends Zombie {
     //用于同步客户端与服务器上面的两个状态,同步属性值
     private static final EntityDataAccessor<Boolean> DATA_IS_OBSIDIAN = SynchedEntityData.defineId(BurnedZombie.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_CRAZY = SynchedEntityData.defineId(BurnedZombie.class, EntityDataSerializers.BOOLEAN);
-    //配置凋落物,需要用到mixin
+    //配置掉落物,需要用到mixin
 //    public static final ResourceLocation OBSIDIAN_LOOT = LootBuilder.of("burned").build("obsidian");
 
     public BurnedZombie(EntityType<? extends Zombie> type, Level level) {
@@ -77,12 +77,6 @@ public class BurnedZombie extends Zombie {
         this.getEntityData().define(DATA_IS_CRAZY, false);
     }
 
-    //如果这个僵尸实例的 isObsidian() 方法返回 true，则返回一个自定义的掉落表（OBSIDIAN_LOOT），否则返回原版的默认掉落表。
-//    @Override
-//    protected ResourceLocation getDefaultLootTable() {
-//        return this.isObsidian() ? OBSIDIAN_LOOT : super.getDefaultLootTable();
-//    }
-
     //关于是否可以转化为溺尸,false不能
     @Override
     protected boolean convertsInWater() {
@@ -90,6 +84,7 @@ public class BurnedZombie extends Zombie {
     }
 
     //关于这三个方法的①
+    //实体的高级行为逻辑
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
@@ -97,6 +92,7 @@ public class BurnedZombie extends Zombie {
         if (this.getHealth() <= 10.0D && !this.isCrazy()) this.setCrazy(true);
     }
 
+    //实体的基础行为逻辑
     @Override
     public void aiStep() {
         super.aiStep();
@@ -111,6 +107,7 @@ public class BurnedZombie extends Zombie {
         }
     }
 
+    //实体生命周期中需要进行的逻辑
     @Override
     public void tick() {
         //满足条件后转换为“黑曜石”状态
@@ -122,25 +119,7 @@ public class BurnedZombie extends Zombie {
         super.tick();
     }
 
-    //环境音效
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
-    }
-
-    //受伤音效
-    @Override
-    protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
-        return super.getHurtSound(damageSource);
-    }
-
-    //死亡音效
-    @Override
-    protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
-    }
-
-    //此生物在造成伤害时
+    //处理造成伤害的逻辑
     @Override
     public boolean doHurtTarget(@NotNull Entity entity) {
         boolean hurt = super.doHurtTarget(entity);
@@ -154,7 +133,7 @@ public class BurnedZombie extends Zombie {
         return hurt;
     }
 
-    //是否受到伤害
+    //是否受到伤害(伤害类型)
     @Override
     public boolean hurt(DamageSource source, float amount) {
         return (!(source.getDirectEntity() instanceof AbstractArrow) || !this.isObsidian()) && super.hurt(source, amount);
@@ -166,7 +145,7 @@ public class BurnedZombie extends Zombie {
         return !this.isObsidian() && !this.isInWaterOrBubble();
     }
 
-    //此生物在移动时
+    //处理生物移动的逻辑
     @Override
     public void travel(@NotNull Vec3 vec3) {
         this.setSpeed(this.getMoveSpeed());
@@ -175,10 +154,10 @@ public class BurnedZombie extends Zombie {
 
     //通过不同的状态来返回不同的移动速度
     public float getMoveSpeed() {
-        return (float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isObsidian() ? 0.5F : this.isCrazy() ? 1.5F : 1.0F);
+        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isObsidian() ? 0.5F : this.isCrazy() ? 1.5F : 1.0F);
     }
 
-    //此生物受到的摔落伤害
+    //计算受到的摔落伤害
     @Override
     protected int calculateFallDamage(float distance, float amount) {
         return super.calculateFallDamage(distance, amount) - (this.isObsidian() ? 10 : 0);
@@ -203,6 +182,24 @@ public class BurnedZombie extends Zombie {
         super.readAdditionalSaveData(tag);
         this.setObsidian(tag.getBoolean("IsObsidian"));
         this.setCrazy(tag.getBoolean("IsCrazy"));
+    }
+
+    //环境音效
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return super.getAmbientSound();
+    }
+
+    //受伤音效
+    @Override
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+        return super.getHurtSound(damageSource);
+    }
+
+    //死亡音效
+    @Override
+    protected SoundEvent getDeathSound() {
+        return super.getDeathSound();
     }
 
     //判断是否为“狂暴”状态
@@ -247,6 +244,12 @@ public class BurnedZombie extends Zombie {
         if (obsidian) this.level.levelEvent(1501, this.blockPosition(), 0);
     }
 
+    //如果这个僵尸实例的 isObsidian() 方法返回 true，则返回一个自定义的掉落表（OBSIDIAN_LOOT），否则返回原版的默认掉落表。
+//    @Override
+//    protected ResourceLocation getDefaultLootTable() {
+//        return this.isObsidian() ? OBSIDIAN_LOOT : super.getDefaultLootTable();
+//    }
+
     /**
      * ①
      * 这三大方法tick,aiStep,customServerAiStep都是在实体每个刻都会调用的基础方法
@@ -256,6 +259,7 @@ public class BurnedZombie extends Zombie {
      * 1.如果你在编写自定义实体类，建议继承 MobEntity 或其子类，因为它们已经实现了一些常用的逻辑。
      * 2.在编写实体的逻辑时，应该注意将实体的状态保存在实体数据中，而不是在实体类中定义变量。这是因为实体可能会被序列化、传输或加载到其他维度中，如果将状态保存在实体类中定义变量，这些状态可能会在传输或加载时丢失。
      * 3.在实现 AI 行为时，应该尽可能地使用现有的 API，避免直接操作底层方法或变量。这是因为 Minecraft 的实现可能会不断更新，而直接操作底层方法或变量可能会导致代码不兼容，需要进行大量的修改。
+     *
      * ②
      * 在这里移除是为了确保已经存在的修饰器不会和新的修饰器冲突。
      * 通过移除所有现有的修饰器，我们可以确保在设置新修饰器之前，实体不会同时受到多个修饰器的效果。
@@ -263,8 +267,5 @@ public class BurnedZombie extends Zombie {
      * 这意味着修饰器将只在一段时间内生效，之后它们将被自动移除。
      * 这种方法可以确保实体不会永久地保持狂暴状态。
      */
-    public void test() {
-
-    }
 
 }
